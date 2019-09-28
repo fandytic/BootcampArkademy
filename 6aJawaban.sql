@@ -1,0 +1,1 @@
+SELECT a.name, b.name, c.salary FROM name a, work b, salary c WHERE a.id_work = b.id AND a.id_salary = c.id;
