@@ -166,4 +166,17 @@ include 'conn.php';
         });
     }
     
+    function deleteUser(id) {
+    var conf = confirm("Are you sure, do you really want to delete User?");
+    if (conf == true) {
+        $.post("deleteUser.php", {
+                id: id
+            },
+            function (data, status) {
+                // reload Users by using readRecords();
+                readRecords();
+            }
+        );
+    }
+}
 </script>
