@@ -25,7 +25,7 @@ include 'conn.php';
   <!-- Modal add -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-      
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -75,7 +75,7 @@ include 'conn.php';
   <!-- Modal delete -->
   <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
-      
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -94,7 +94,7 @@ include 'conn.php';
   <!-- Modal edit -->
   <div class="modal fade" id="myModal3" role="dialog">
     <div class="modal-dialog">
-      
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -103,38 +103,39 @@ include 'conn.php';
         </div>
         <div class="modal-body">
           <div class="form-group">
-          <input type="text" class="form-control" id="name" placeholder="name">
+            <input type="text" class="form-control" id="names" placeholder="name">
           </div>
           <div class="form-group">
-          <select class="form-control" id="work">
-                            <?php 
-                            $sql = "SELECT * FROM work";
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
+            <select class="form-control" id="works">
+              <?php 
+              $sql = "SELECT * FROM work";
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
                                 // output data of each row
-                                while($row = $result->fetch_assoc()) {
-                                ?>
-                                    <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
-                                <?php }
-                            } ?>
-                        </select>
+                while($row = $result->fetch_assoc()) {
+                  ?>
+                  <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
+                <?php }
+              } ?>
+            </select>
           </div>
           <div class="form-group">
-          <select class="form-control" id="salary">
-                              <?php 
-                                $sql = "SELECT * FROM salary";
-                                $result = $conn->query($sql);
-                                if ($result->num_rows > 0) {
+            <select class="form-control" id="salarys">
+              <?php 
+              $sql = "SELECT * FROM salary";
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
                                     // output data of each row
-                                    while($row = $result->fetch_assoc()) {
-                                    ?>
-                                        <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
-                                    <?php }
-                                } ?>
-                            </select>
+                while($row = $result->fetch_assoc()) {
+                  ?>
+                  <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
+                <?php }
+              } ?>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
+          <input type="hidden" class="form-control" id="ids">
           <button href="javascript:void(0)" onclick="updateRecord()" type="button" class="btn btn-warning" id="update">Edit</button>
         </div>
       </div>
@@ -198,43 +199,43 @@ include 'conn.php';
           function (data, status) {
                 // reload Users by using readRecords();
                 $("#myModal2").modal("show");
-            readRecords();
-          });
+                readRecords();
+              });
         }
       }
 
-    function getUserDetails(id) {
+      function getUserDetails(id) {
     // Add User ID to the hidden field for furture usage
-    $("#id").val(id);
+    $("#ids").val(id);
     $.post("getUserDetails.php", {
-            id: id
-        },
-        function (data, status) {
+      id: id
+    },
+    function (data, status) {
             // PARSE json data
             var user = JSON.parse(data);
             // Assing existing values to the modal popup fields
-            $("#name").val(user.name);
-            $("#work").val(user.work).change();
-            $("#salary").val(user.salary).change();
-        }
-    );
+            $("#names").val(user.name);
+            $("#works").val(user.work).change();
+            $("#salarys").val(user.salary).change();
+          }
+          );
     // Open modal popup
     $("#myModal3").modal("show");
     $("#update").show();
     $("#add").hide();
-    }
-    function updateRecord() {
+  }
+  function updateRecord() {
         // get values
-        var id = $("#id").val();
-        var name = $("#name").val();
-        var work = $("#work").val();
-        var salary = $("#salary").val();
+        var id = $("#ids").val();
+        var name = $("#names").val();
+        var work = $("#works").val();
+        var salary = $("#salarys").val();
         // Add record
         $.post("updateUserDetails.php", {
-            id: id,
-            name: name,
-            work: work,
-            salary: salary
+          id: id,
+          name: name,
+          work: work,
+          salary: salary
         }, function (data, status) {
             // close the popup
             $("#myModal3").modal("hide");
@@ -242,6 +243,6 @@ include 'conn.php';
             readRecords();
             // clear fields from the popup
             $("#name").val("");
-        });
-    }
+          });
+      }
     </script>
