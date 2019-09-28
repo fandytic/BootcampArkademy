@@ -84,7 +84,7 @@ include 'conn.php';
         <div class="modal-body">
           <center>
             <img src="img/checked.png">
-            <h2>Data Bintang telah berhasil dihapus</h2>
+            <h2>Data telah berhasil dihapus</h2>
           </center>
         </div>
       </div>
@@ -103,17 +103,39 @@ include 'conn.php';
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleFormControlInput1" value="Bintang">
+          <input type="text" class="form-control" id="name" placeholder="name">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleFormControlInput1" value="Backend Dev">
+          <select class="form-control" id="work">
+                            <?php 
+                            $sql = "SELECT * FROM work";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while($row = $result->fetch_assoc()) {
+                                ?>
+                                    <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
+                                <?php }
+                            } ?>
+                        </select>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleFormControlInput1" value="Rp. 12.000.000">
+          <select class="form-control" id="salary">
+                              <?php 
+                                $sql = "SELECT * FROM salary";
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                    ?>
+                                        <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
+                                    <?php }
+                                } ?>
+                            </select>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning">Edit</button>
+          <button href="javascript:void(0)" onclick="updateRecord()" type="button" class="btn btn-warning" id="update">Edit</button>
         </div>
       </div>
     </div>
@@ -136,6 +158,7 @@ include 'conn.php';
   $(document).ready(function () {
     // READ recods on page load
     readRecords(); // calling function
+    $("#update").hide();
   });
     // READ records
     function readRecords() {
@@ -174,8 +197,51 @@ include 'conn.php';
           },
           function (data, status) {
                 // reload Users by using readRecords();
+                $("#myModal2").modal("show");
             readRecords();
           });
         }
       }
+
+    function getUserDetails(id) {
+    // Add User ID to the hidden field for furture usage
+    $("#id").val(id);
+    $.post("getUserDetails.php", {
+            id: id
+        },
+        function (data, status) {
+            // PARSE json data
+            var user = JSON.parse(data);
+            // Assing existing values to the modal popup fields
+            $("#name").val(user.name);
+            $("#work").val(user.work).change();
+            $("#salary").val(user.salary).change();
+        }
+    );
+    // Open modal popup
+    $("#myModal3").modal("show");
+    $("#update").show();
+    $("#add").hide();
+    }
+    function updateRecord() {
+        // get values
+        var id = $("#id").val();
+        var name = $("#name").val();
+        var work = $("#work").val();
+        var salary = $("#salary").val();
+        // Add record
+        $.post("updateUserDetails.php", {
+            id: id,
+            name: name,
+            work: work,
+            salary: salary
+        }, function (data, status) {
+            // close the popup
+            $("#myModal3").modal("hide");
+            // read records again
+            readRecords();
+            // clear fields from the popup
+            $("#name").val("");
+        });
+    }
     </script>

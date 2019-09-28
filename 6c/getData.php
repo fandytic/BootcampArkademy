@@ -22,7 +22,7 @@ include 'conn.php';
                 <th scope="row"><?php echo $row["name"] ?></th>
                 <td><?php echo $row["work"] ?></td>
                 <td><?php echo $row["salary"] ?></td>
-                <td><img src="img/edit.png" width="10%">
+                <td><a onclick="getUserDetails(<?php echo $row["id_user"] ?>)" ><img src="img/edit.png" width="10%"></a>
                 <a onclick="deleteUser(<?php echo $row["id_user"] ?>)" ><img src="img/trash.png" width="10%"></a></td>
             </tr>
         <?php }
