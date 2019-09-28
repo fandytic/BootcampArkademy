@@ -7,13 +7,13 @@ Kegunaan JSON pada REST API : JSON sebagai format untuk bertukar data client dan
 
 ## Hasil Interface Soal no 6b
 Home :
-![Home Interface](/6b/img/home.png "Home")
+![Home Interface](/6b/img/home.PNG "Home")
 
 Add :
-![Add Interface](/6b/img/add.png "Add")
+![Add Interface](/6b/img/add.PNG "Add")
 
 Delete :
-![Delete Interface](/6b/img/delete.png "Delete")
+![Delete Interface](/6b/img/delete.PNG "Delete")
 
 Edit :
-![Edit Interface](/6b/img/edite.png "Edit")
+![Edit Interface](/6b/img/edite.PNG "Edit")
