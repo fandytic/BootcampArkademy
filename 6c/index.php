@@ -1,3 +1,6 @@
+<?php 
+include 'conn.php';
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -31,25 +34,39 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
+            <input type="text" class="form-control" id="name" placeholder="name">
           </div>
           <div class="form-group">
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Work</option>
-              <option>Front End</option>
-              <option>Back End</option>
+            <select class="form-control" id="work">
+            <?php 
+            $sql = "SELECT * FROM work";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
+                <?php }
+            } ?>
             </select>
           </div>
           <div class="form-group">
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Salary</option>
-              <option>Rp.12.000.000</option>
-              <option>Rp.10.000.000</option>
+            <select class="form-control" id="salary">
+            <?php 
+            $sql = "SELECT * FROM salary";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
+                <?php }
+            } ?>
             </select>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning">Add</button>
+          <button type="button" href="javascript:void(0)" onclick="addRecord()" class="btn btn-warning">Add</button>
         </div>
       </div>
     </div>
@@ -109,44 +126,44 @@
         <br>
         <br>
         <br>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Work</th>
-              <th>Salary</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bintang</td>
-              <td>Backend Dev</td>
-              <td>Rp.12.000.000</td>
-              <td><a data-toggle="modal" data-target="#myModal3"><img src="img/edit.png" width="10%"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal2"><img src="img/trash.png" width="10%"></a></td>
-            </tr>
-            <tr>
-              <td>Tasya</td>
-              <td>Backend Dev</td>
-              <td>Rp.12.000.000</td>
-              <td><img src="img/edit.png" width="10%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/trash.png" width="10%"></td>
-            </tr>
-            <tr>
-              <td>Poetra</td>
-              <td>Backend Dev</td>
-              <td>Rp.12.000.000</td>
-              <td><img src="img/edit.png" width="10%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/trash.png" width="10%"></td>
-            </tr>
-            <tr>
-              <td>Joko</td>
-              <td>Front Dev</td>
-              <td>Rp.10.000.000</td>
-              <td><img src="img/edit.png" width="10%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/trash.png" width="10%"></td>
-            </tr>
-          </tbody>
-        </table>
+        <div id="viewdata"></div>
       </div>
     </div>
   </div>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+    // READ recods on page load
+    readRecords(); // calling function
+    });
+    // READ records
+    function readRecords() {
+        $.get("getData.php", {}, function (data, status) {
+            $("#viewdata").html(data);
+        });
+    }
+
+    function addRecord() {
+        // get values
+        var name = $("#name").val();
+        var work = $("#work").val();
+        var salary = $("#salary").val();
+
+        // Add record
+        $.post("addRecord.php", {
+            name: name,
+            work: work,
+            salary: salary
+        }, function (data, status) {
+            // close the popup
+            $("#myModal").modal("hide");
+            // read records again
+            readRecords();
+
+            // clear fields from the popup
+            $("#name").val("");
+        });
+    }
+    
+</script>
