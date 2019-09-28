@@ -1,0 +1,68 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+}
+
+.navbar{
+    position: absolute;
+    width: 100%;
+    height: 109px;
+    left: 0px;
+    top: 0px;
+    
+    background: #FFFEFE;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.namajudul{
+    position: absolute;
+width: 555px;
+height: 65px;
+left: 214px;
+top: 34px;
+
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 41px;
+
+color: #000000;
+}
+
+.add{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    right: 48px;
+    top: 30px;
+
+    background: #F3AC13;
+    border-radius: 10px;
+}
+
+.img {
+    position: absolute;
+width: 150px;
+height: 106px;
+left: 48px;
+top: 0px;
+}
+
+.table,.table th,
+.table td {
+ text-align: center; 
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+  }
+input{
+    color: #C9B6B6;
+}
