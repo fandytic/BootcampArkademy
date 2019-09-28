@@ -3,14 +3,14 @@ include 'conn.php';
 ?>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body bgcolo="#FFEFEF">
   <nav class="navbar">
@@ -38,30 +38,30 @@ include 'conn.php';
           </div>
           <div class="form-group">
             <select class="form-control" id="work">
-            <?php 
-            $sql = "SELECT * FROM work";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
+              <?php 
+              $sql = "SELECT * FROM work";
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                ?>
-                    <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
+                  ?>
+                  <option value="<?php echo $row["id"] ?>"><?php echo $row["name"] ?></option>
                 <?php }
-            } ?>
+              } ?>
             </select>
           </div>
           <div class="form-group">
             <select class="form-control" id="salary">
-            <?php 
-            $sql = "SELECT * FROM salary";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
+              <?php 
+              $sql = "SELECT * FROM salary";
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                ?>
-                    <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
+                  ?>
+                  <option value="<?php echo $row["id"] ?>"><?php echo $row["salary"] ?></option>
                 <?php }
-            } ?>
+              } ?>
             </select>
           </div>
         </div>
@@ -133,15 +133,15 @@ include 'conn.php';
 </body>
 </html>
 <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
     // READ recods on page load
     readRecords(); // calling function
-    });
+  });
     // READ records
     function readRecords() {
-        $.get("getData.php", {}, function (data, status) {
-            $("#viewdata").html(data);
-        });
+      $.get("getData.php", {}, function (data, status) {
+        $("#viewdata").html(data);
+      });
     }
 
     function addRecord() {
@@ -152,9 +152,9 @@ include 'conn.php';
 
         // Add record
         $.post("addRecord.php", {
-            name: name,
-            work: work,
-            salary: salary
+          name: name,
+          work: work,
+          salary: salary
         }, function (data, status) {
             // close the popup
             $("#myModal").modal("hide");
@@ -163,20 +163,19 @@ include 'conn.php';
 
             // clear fields from the popup
             $("#name").val("");
-        });
-    }
-    
-    function deleteUser(id) {
-    var conf = confirm("Are you sure, do you really want to delete User?");
-    if (conf == true) {
-        $.post("deleteUser.php", {
-                id: id
-            },
-            function (data, status) {
+          });
+      }
+      
+      function deleteUser(id) {
+        var conf = confirm("Are you sure, do you really want to delete User?");
+        if (conf == true) {
+          $.post("deleteUser.php", {
+            id: id
+          },
+          function (data, status) {
                 // reload Users by using readRecords();
-                readRecords();
-            }
-        );
-    }
-}
-</script>
+            readRecords();
+          });
+        }
+      }
+    </script>
